@@ -32,14 +32,16 @@ let signup = (req, res) => {
         id: data.id
         });
     })
-        .catch(console.error)
+        .catch((error) => {
+            res.send({error: "Error signing up. Please try again"})
+        })
 }
   
   let login = (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
     db.getUserInfo(email, password)
-      .then(data =>  { console.log(data);
+      .then(data =>  { 
           let token = jwt.sign(
             {
               email: email,
@@ -48,7 +50,7 @@ let signup = (req, res) => {
             secrets.SIGNATURE,
             {expiresIn: '7d'});
         res.send({
-          token: token, 
+          token: token,
           email: email, 
           id: data.id
         });
