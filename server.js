@@ -7,13 +7,12 @@ const jwt = require('jsonwebtoken');
 const secrets = require('./secrets');
 const db = require('./db')
 
-
 const allowCORS = (req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     req.header("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  }
+}
   
 let signup = (req, res) => {
     let email = req.body.email;
@@ -27,11 +26,6 @@ let signup = (req, res) => {
             },
             secrets.SIGNATURE,
             {expiresIn: '30d'});
-            console.log({
-            token: token, 
-            email: email, 
-            id: data.id
-            })
         res.send({
         token: token, 
         email: email, 
@@ -44,7 +38,7 @@ let signup = (req, res) => {
   let login = (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
-    db.checkUserCreds(email, password)
+    db.getUserInfo(email, password)
       .then(data =>  { console.log(data);
           let token = jwt.sign(
             {

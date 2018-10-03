@@ -9,7 +9,7 @@ let addNewUser = (email, password) => {
     [email, password])
 }
 
-let checkUserCreds = (email, password) => {
+let getUserInfo = (email, password) => {
     return db.one('SELECT * from users \
       WHERE email = $1 AND password = $2', 
       [email, password]);
@@ -17,5 +17,5 @@ let checkUserCreds = (email, password) => {
 
   module.exports = {
     addNewUser: addNewUser,
-    checkUserCreds: checkUserCreds,
+    getUserInfo: getUserInfo,
   };
