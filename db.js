@@ -10,12 +10,20 @@ let addNewUser = (email, password) => {
 }
 
 let getUserInfo = (email, password) => {
-    return db.one('SELECT * from users \
-      WHERE email = $1 AND password = $2', 
-      [email, password]);
-  }
+  return db.one('SELECT * from users \
+    WHERE email = $1 AND password = $2', 
+    [email, password]);
+}
 
-  module.exports = {
-    addNewUser: addNewUser,
-    getUserInfo: getUserInfo,
-  };
+let addPlant = (user_id, name, location, light, water_frequency, last_watered, notes) => {
+  return db.query(`
+    INSERT INTO plants (user_id, name, location, light, water_frequency, last_watered, notes)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        returning id ;`, [user_id, name, location, light, water_frequency, last_watered, notes])
+}
+
+module.exports = {
+  addNewUser: addNewUser,
+  getUserInfo: getUserInfo,
+  addPlant: addPlant
+};
