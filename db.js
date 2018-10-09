@@ -22,8 +22,16 @@ let addPlant = (user_id, name, location, light, water_frequency, last_watered, n
         returning id ;`, [user_id, name, location, light, water_frequency, last_watered, notes])
 }
 
+let getUserPlants = (user_id) => {
+  return db.query(`
+  SELECT * from plants \
+  WHERE user_id = $1`, 
+  [user_id]);
+}
+
 module.exports = {
   addNewUser: addNewUser,
   getUserInfo: getUserInfo,
-  addPlant: addPlant
+  addPlant: addPlant,
+  getUserPlants: getUserPlants
 };
