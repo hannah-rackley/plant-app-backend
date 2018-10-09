@@ -48,7 +48,7 @@ const signup = (req, res) => {
                 id: data.id
                 },
                 secrets.SIGNATURE,
-                {expiresIn: '7d'});
+                {expiresIn: '30d'});
         res.send({
           token: token,
           email: email, 
@@ -72,14 +72,27 @@ const addPlant = (req, res) => {
     .catch(err => console.log(err));
 }
 
+const getUserPlants = (req, res) => {
+    let user_id = req.params.id
+    db.getUserPlants(user_id)
+        .then((response) => {
+            res.send(JSON.stringify(response))
+          }
+          )
+          .catch(err =>
+            console.log(err)
+          );
+  }
+
 app.use(bodyParser.json());
 
 app.use(allowCORS);
 app.use(publicRouter);
+app.use('/api', authRouter);
 publicRouter.post('/signup', signup);
 publicRouter.post('/login', login);
+authRouter.get('/plants/:id', getUserPlants)
 authRouter.post('/add-plant', addPlant)
-app.use('/api', authRouter);
 
 app.listen(5000);
   
