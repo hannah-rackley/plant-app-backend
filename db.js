@@ -29,9 +29,16 @@ let getUserPlants = (user_id) => {
   [user_id]);
 }
 
+let updateLastWatered = (plant_id, last_watered) => {
+  console.log(plant_id);
+  console.log(last_watered);
+  return db.query(`UPDATE plants SET last_watered = $1 WHERE id = $2`, [last_watered, plant_id])
+}
+
 module.exports = {
   addNewUser: addNewUser,
   getUserInfo: getUserInfo,
   addPlant: addPlant,
-  getUserPlants: getUserPlants
+  getUserPlants: getUserPlants,
+  updateLastWatered: updateLastWatered
 };

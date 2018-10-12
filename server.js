@@ -84,6 +84,17 @@ const getUserPlants = (req, res) => {
           );
   }
 
+const updateLastWatered = (req, res) => {
+    let plant_id = req.body.plant_id;
+    let last_watered = req.body.last_watered;
+    console.log('updating a plant');
+    db.updateLastWatered(plant_id, last_watered )
+    .then(() => {
+        res.send('plant updated')
+    })
+    .catch(err => console.log(err));
+}
+
 app.use(bodyParser.json());
 
 app.use(allowCORS);
@@ -93,6 +104,7 @@ publicRouter.post('/signup', signup);
 publicRouter.post('/login', login);
 authRouter.get('/plants/:id', getUserPlants)
 authRouter.post('/add-plant', addPlant)
+authRouter.put('/update-watered', updateLastWatered)
 
 app.listen(5000);
   
