@@ -30,9 +30,11 @@ let getUserPlants = (user_id) => {
 }
 
 let updateLastWatered = (plant_id, last_watered) => {
-  console.log(plant_id);
-  console.log(last_watered);
   return db.query(`UPDATE plants SET last_watered = $1 WHERE id = $2`, [last_watered, plant_id])
+}
+
+let deletePlant = (plant_id) => {
+  return db.query(`DELETE FROM plants WHERE id = $1`, [plant_id])
 }
 
 module.exports = {
@@ -40,5 +42,6 @@ module.exports = {
   getUserInfo: getUserInfo,
   addPlant: addPlant,
   getUserPlants: getUserPlants,
-  updateLastWatered: updateLastWatered
+  updateLastWatered: updateLastWatered,
+  deletePlant: deletePlant
 };
