@@ -95,6 +95,16 @@ const updateLastWatered = (req, res) => {
     .catch(err => console.log(err));
 }
 
+const deletePlant = (req, res) => {
+    let plant_id = req.body.plant_id;
+    console.log('deleting a plant');
+    db.deletePlant(plant_id)
+    .then(() => {
+        res.send('plant deleted')
+    })
+    .catch(err => console.log(err));
+}
+
 app.use(bodyParser.json());
 
 app.use(allowCORS);
@@ -102,9 +112,10 @@ app.use(publicRouter);
 app.use('/api', authRouter);
 publicRouter.post('/signup', signup);
 publicRouter.post('/login', login);
-authRouter.get('/plants/:id', getUserPlants)
-authRouter.post('/add-plant', addPlant)
-authRouter.put('/update-watered', updateLastWatered)
+authRouter.get('/plants/:id', getUserPlants);
+authRouter.post('/add-plant', addPlant);
+authRouter.put('/update-watered', updateLastWatered);
+authRouter.delete('/delete-plant', deletePlant);
 
 app.listen(5000);
   
