@@ -15,11 +15,11 @@ let getUserInfo = (email, password) => {
     [email, password]);
 }
 
-let addPlant = (user_id, name, location, light, water_frequency, last_watered, notes) => {
+let addPlant = (user_id, name, location, light, water_frequency, last_watered, notes, image) => {
   return db.query(`
-    INSERT INTO plants (user_id, name, location, light, water_frequency, last_watered, notes)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
-        returning id ;`, [user_id, name, location, light, water_frequency, last_watered, notes])
+    INSERT INTO plants (user_id, name, location, light, water_frequency, last_watered, notes, selected_image_url, image_array)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        returning id ;`, [user_id, name, location, light, water_frequency, last_watered, notes, image, image])
 }
 
 let getUserPlants = (user_id) => {

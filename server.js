@@ -66,8 +66,10 @@ const addPlant = (req, res) => {
     let water_frequency = req.body.days;
     let location = req.body.location;
     let notes = req.body.notes;
+    let image = req.body.image;
     console.log('adding a plant');
-    db.addPlant(user_id, name, location, light, water_frequency, last_watered, notes)
+    console.log(image);
+    db.addPlant(user_id, name, location, light, water_frequency, last_watered, notes, image)
     .then((response) => {res.end(JSON.stringify(response))})
     .catch(err => console.log(err));
 }
