@@ -13,6 +13,6 @@ CREATE TABLE plants(
    water_frequency VARCHAR(255),
    last_watered VARCHAR(255),
    notes VARCHAR(255), 
-   selected_image_url VARCHAR(255), 
+   selected_image_url text, 
    image_array text[]
 );
