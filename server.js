@@ -68,9 +68,8 @@ const addPlant = (req, res) => {
     let notes = req.body.notes;
     let image = req.body.image;
     console.log('adding a plant');
-    console.log(image);
     db.addPlant(user_id, name, location, light, water_frequency, last_watered, notes, image)
-    .then((response) => {res.end(JSON.stringify(response))})
+    // .then((response) => {res.end(JSON.stringify(response))})
     .catch(err => console.log(err));
 }
 
@@ -106,6 +105,24 @@ const deletePlant = (req, res) => {
     })
     .catch(err => console.log(err));
 }
+
+// const updatePlant = (req, res) => {
+//     let plant_id = req.body.plant_id;
+//     let name= req.body.name;
+//     let light = req.body.light;
+//     let last_watered = req.body.lastWatered;
+//     let water_frequency = req.body.days;
+//     let location = req.body.location;
+//     let notes = req.body.notes;
+//     let image = req.body.image;
+//     console.log('updating plant info');
+//     db.updatePlantInfo(plant_id, name, location, light, water_frequency, last_watered, notes, image)
+//     .then(() => db.updatePlantImageArray(plant_id, image)
+//     .catch(err => console.log(err)))
+//     .catch(err => console.log(err));
+//     }
+
+
 
 app.use(bodyParser.json());
 
