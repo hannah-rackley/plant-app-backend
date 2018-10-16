@@ -4,7 +4,6 @@ CREATE TABLE users(
     password TEXT NOT NULL 
 );
 
--- No support for images yet
 CREATE TABLE plants(
    id serial PRIMARY KEY NOT NULL,
    user_id integer,
@@ -13,5 +12,7 @@ CREATE TABLE plants(
    light VARCHAR(255),
    water_frequency VARCHAR(255),
    last_watered VARCHAR(255),
-   notes VARCHAR(255)
+   notes VARCHAR(255), 
+   selected_image_url text, 
+   image_array text[]
 );
