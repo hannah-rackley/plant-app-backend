@@ -107,23 +107,28 @@ const deletePlant = (req, res) => {
     .catch(err => console.log(err));
 }
 
-// const updatePlant = (req, res) => {
-//     let plant_id = req.body.plant_id;
-//     let name= req.body.name;
-//     let light = req.body.light;
-//     let last_watered = req.body.lastWatered;
-//     let water_frequency = req.body.days;
-//     let location = req.body.location;
-//     let notes = req.body.notes;
-//     let image = req.body.image;
-//     console.log('updating plant info');
-//     db.updatePlantInfo(plant_id, name, location, light, water_frequency, last_watered, notes, image)
-//     .then(() => db.updatePlantImageArray(plant_id, image)
-//     .catch(err => console.log(err)))
-//     .catch(err => console.log(err));
-//     }
-
-
+const updatePlant = (req, res) => {
+    let plant_id = req.body.plant_id;
+    let name= req.body.name;
+    let light = req.body.light;
+    let last_watered = req.body.lastWatered;
+    let water_frequency = req.body.days;
+    let location = req.body.location;
+    let notes = req.body.notes;
+    let image = req.body.image;
+    console.log('updating plant info');
+    db.updatePlantInfo(plant_id, name, location, light, water_frequency, last_watered, notes, image)
+    .then(() => {
+        if(image !== null) {
+            db.updatePlantImageArray(plant_id, image)
+            .then((response) => {res.send(response)})
+            .catch(err => console.log(err))
+        } else {
+            res.send('no image')
+        }
+        })
+    .catch(err => console.log(err));
+}
 
 app.use(bodyParser.json());
 
@@ -136,6 +141,7 @@ authRouter.get('/plants/:id', getUserPlants);
 authRouter.post('/add-plant', addPlant);
 authRouter.put('/update-watered', updateLastWatered);
 authRouter.delete('/delete-plant', deletePlant);
+authRouter.put('/update-plant', updatePlant);
 
 app.listen(5000);
   
