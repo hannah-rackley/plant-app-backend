@@ -60,6 +60,5 @@ module.exports = {
   updateLastWatered: updateLastWatered,
   deletePlant: deletePlant, 
   updatePlantInfo: updatePlantInfo,
-  updatePlantImageArray: updatePlantImageArray,
-  getPlantPhotos: getPlantPhotos
+  updatePlantImageArray: updatePlantImageArray
 };
