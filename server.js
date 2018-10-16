@@ -69,7 +69,8 @@ const addPlant = (req, res) => {
     let image = req.body.image;
     console.log('adding a plant');
     db.addPlant(user_id, name, location, light, water_frequency, last_watered, notes, image)
-    // .then((response) => {res.end(JSON.stringify(response))})
+    .then((response) => {
+    res.end(JSON.stringify(response))})
     .catch(err => console.log(err));
 }
 

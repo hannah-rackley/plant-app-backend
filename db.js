@@ -16,14 +16,22 @@ let getUserInfo = (email, password) => {
 }
 
 let addPlant = (user_id, name, location, light, water_frequency, last_watered, notes, image) => {
-  image !== null ? db.query(`
-    INSERT INTO plants (user_id, name, location, light, water_frequency, last_watered, notes, selected_image_url, image_array)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-        returning id ;`, [user_id, name, location, light, water_frequency, last_watered, notes, image, [image]]) :
-        db.query(`INSERT INTO plants (user_id, name, location, light, water_frequency, last_watered, notes)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
-        returning id ;`, [user_id, name, location, light, water_frequency, last_watered, notes])
+  let image_array;
+    if (image === null) {
+      image_array = [];
+    } else {
+      image_array = [image];
+    }
+    return db.query(`INSERT INTO plants (user_id, name, location, light, water_frequency, last_watered, notes, selected_image_url, image_array)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      returning id`, [user_id, name, location, light, water_frequency, last_watered, notes, image, image_array])
 }
+
+// let addImage = (plant_id, image) => {
+//   return db.query(`
+//     INSERT INTO plants (selected_image_url, image_array)
+//     VALUES ($1, $2) WHERE id = $3;`, [image, [image]], plant_id)
+// }
 
 let getUserPlants = (user_id) => {
   return db.query(`
@@ -69,19 +77,3 @@ module.exports = {
 // let updatePlantImageArray = (plant_id, image) => {
 //   return db.query(`UPDATE plants SET selected_image_url = $1, image_array = array_cat(image_array, $2) WHERE id = $3`, [image, [image], plant_id])
 // }
-
-// let deletePlant = (plant_id) => {
-//   return db.query(`DELETE FROM plants WHERE id = $1`, [plant_id])
-// }
-
-// module.exports = {
-//   addNewUser: addNewUser,
-//   getUserInfo: getUserInfo,
-//   addPlantWithPhoto: addPlantWithPhoto,
-//   addPlantNoPhoto: addPlantNoPhoto,
-//   getUserPlants: getUserPlants,
-//   updateLastWatered: updateLastWatered,
-//   deletePlant: deletePlant,
-//   updatePlantInfo: updatePlantInfo, 
-//   updatePlantImageArray: updatePlantImageArray
-// };
